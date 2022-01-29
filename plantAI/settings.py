@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-@oym)o!im2u!er1q8zqnqhwm3t2)12$d(k&t%(^zz^#uay!e+&'
+SECRET_KEY = 'django-insecure-@oym)o!im2u!er1q8zqnqhwm3t2)12$d(k&t%(^zz^#uay!e+&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,9 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'user',
     'rest_framework',
-    'corsheaders'
+    'rest_framework.authtoken',
+    'corsheaders',
+
+    # Apps
+    'main'
 ]
 
 MIDDLEWARE = [
@@ -84,7 +87,7 @@ WSGI_APPLICATION = 'plantAI.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'plantAi staging',
+        'NAME': 'plantAi',
         'USER': 'postgres',
         'PASSWORD': 'arjun',
         'HOST': '127.0.0.1',
@@ -92,6 +95,11 @@ DATABASES = {
     }
 }
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # <-- And here
+    ],
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
