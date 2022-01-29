@@ -56,6 +56,7 @@ MIDDLEWARE = [
 CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'plantAI.urls'
+CSRF_TRUSTED_ORIGINS = ['https://*.herokuapp.com']
 
 
 TEMPLATES = [
@@ -82,8 +83,12 @@ WSGI_APPLICATION = 'plantAI.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'plantAi staging',
+        'USER': 'postgres',
+        'PASSWORD': 'arjun',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
