@@ -16,10 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.authtoken.views import obtain_auth_token
-from main.views import HelloView
+from main.views import UserCreate
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('hello/', HelloView.as_view(), name='hello'),
-    path('api-token-auth/', obtain_auth_token, name='api_token_auth')
+    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
+    path('create-user/', UserCreate.as_view(), name='account-create'),
 ]
