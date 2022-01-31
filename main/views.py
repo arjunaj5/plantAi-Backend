@@ -42,12 +42,22 @@ class PlantsView(APIView):
         return Response(serializer.data)
 
     def post(self, request, format='json'):
-        serializer = PlantsSerializer(data=request.data)
-        if serializer.is_valid():
-            plant = serializer.save()
-            if plant:
-                print(plant)
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        # Get a list of plants based on search query
+        print(request.data)
+        if request.data['searchQuery']:
+            queryset = Plants.objects.filter(name__icontains=request.data['searchQuery'])
+            serializer = PlantsSerializer(queryset, many=True)
+            return Response(serializer.data)
+
+        # Insert a plant in database
         else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            serializer = PlantsSerializer(data=request.data)
+            if serializer.is_valid():
+                plant = serializer.save()
+                if plant:
+                    print(plant)
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

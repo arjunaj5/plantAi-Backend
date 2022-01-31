@@ -10,3 +10,6 @@ class Plants(models.Model):
 
     class Meta:
         verbose_name_plural = "Plants"
+
+    def __str__(self):
+        return self.name
