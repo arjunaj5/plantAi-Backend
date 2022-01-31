@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.authtoken.views import obtain_auth_token
-from main.views import UserCreate
+from main.views import UserCreate, PlantsView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
     path('create-user/', UserCreate.as_view(), name='account-create'),
+    path('plants-view/', PlantsView.as_view(), name='plants-view')
 ]
