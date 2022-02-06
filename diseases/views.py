@@ -18,7 +18,7 @@ class ExampleView(APIView):
 
     def post(self, request):
         data = request.data['photo']
-        format, imgstr = data.split(';base64,')
+        format, imgstr = data.split(';base64,', -1)
         ext = format.split('/')[-1]
         data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
 
