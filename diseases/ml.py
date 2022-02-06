@@ -27,13 +27,7 @@ def detect_disease(path="../media/uploads/temp.jpeg"):
     result = Detection.predict(test_img)
     a = result.argmax()
     # print('a:',a)
-    classes = classes
     # print(classes)
     # print(len(classes))
-    category = []
-    for i in classes:
-        category.append(i)
-    for i in range(len(classes)):
-        if (i == a):
-            output = category[i]
+    output = a
     return output

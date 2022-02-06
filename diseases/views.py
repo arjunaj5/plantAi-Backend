@@ -5,7 +5,9 @@ import base64
 from django.core.files.base import ContentFile
 from .ml import detect_disease
 
-from .serializers import UploadsSerializer
+from .serializers import UploadsSerializer, DiseasesSerializer
+
+from .models import Diseases
 
 
 class ExampleView(APIView):
@@ -26,7 +28,10 @@ class ExampleView(APIView):
             disease_image = serializer.save()
             path = "media/" + str(disease_image.photo)
             print(path)
-            result = detect_disease(path)
-            print(result)
-
-        return Response({'received data': request.data})
+            ml_id = detect_disease(path)
+            if ml_id in [1, 4, 14]:
+                return Response({"healthy": True})
+            result = Diseases.objects.get(ml_id=ml_id)
+            serializer = DiseasesSerializer(result)
+            return Response(serializer.data)
+        return Response({"result": "image not valid"})

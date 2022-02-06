@@ -6,11 +6,15 @@ class Uploads(models.Model):
     photo = models.ImageField(upload_to='uploads', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        verbose_name_plural = "Uploads"
+
 
 class Diseases(models.Model):
     description = models.TextField()
     name = models.CharField(max_length=50)
-    plant_id = models.ForeignKey(Plants, on_delete=models.CASCADE)
+    ml_id = models.IntegerField(unique=True)
+    plant = models.ForeignKey(Plants, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
