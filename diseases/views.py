@@ -20,11 +20,11 @@ class ExampleView(APIView):
     def post(self, request):
         data64 = request.data['photo']
         user_id = request.data['userId']
-        format, imgstr = data64.split(';base64,')
-        ext = format.split('/')[-1]
+        # format, imgstr = data64.split(';base64,')
+        # ext = format.split('/')[-1]
         # data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
 
-        data = ContentFile(base64.b64decode(imgstr), name='temp.jpg')
+        data = ContentFile(base64.b64decode(data64), name='temp.jpg')
 
         serializer = UploadsSerializer(data={'photo': data})
         if serializer.is_valid():
