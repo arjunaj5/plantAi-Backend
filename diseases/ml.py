@@ -3,7 +3,7 @@ from keras.preprocessing import image
 import numpy as np
 
 
-def detect_disease(path="../media/uploads/temp.jpeg"):
+def detect_disease(path):
     Detection = load_model('diseases/Plant_Disease_Detection.h5')
     classes = {'Pepper__bell___Bacterial_spot': 0,
                'Pepper__bell___healthy': 1,
