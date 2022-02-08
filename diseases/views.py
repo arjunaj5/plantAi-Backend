@@ -20,10 +20,6 @@ class DiseaseDetectionView(APIView):
 
     def post(self, request):
         data64 = request.data['photo']
-        # format, imgstr = data64.split(';base64,')
-        # ext = format.split('/')[-1]
-        # data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
-
         data = ContentFile(base64.b64decode(data64), name='temp.jpg')
 
         serializer = UploadsSerializer(data={'photo': data})
@@ -33,7 +29,7 @@ class DiseaseDetectionView(APIView):
             path = "media/" + str(disease_image.photo)
             print(path)
             ml_id = detect_disease(path)
-            if ml_id in [1, 4, 14]:
+            if ml_id in [3, 4, 6, 10, 14, 17, 19, 22, 23, 24, 27, 37]:
                 return Response({"healthy": True})
             disease_data = Diseases.objects.get(ml_id=ml_id)
             serializer = DiseasesSerializer(disease_data)
