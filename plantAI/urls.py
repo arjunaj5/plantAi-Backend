@@ -17,12 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from main.views import CustomObtainAuthToken
 from main.views import UserCreate, PlantsView
-from diseases.views import ExampleView
+from diseases.views import DiseaseDetectionView, DiseaseImageUploadToImagekitView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-token-auth/', CustomObtainAuthToken.as_view(), name='api_token_auth'),
     path('create-user/', UserCreate.as_view(), name='account-create'),
     path('plants-view/', PlantsView.as_view(), name='plants-view'),
-    path('detect-disease/', ExampleView.as_view(), name='detect-disease'),
+    path('detect-disease/', DiseaseDetectionView.as_view(), name='detect-disease'),
+    path('upload-imagekit/', DiseaseImageUploadToImagekitView.as_view(), name='upload-imagekit')
 ]
