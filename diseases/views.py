@@ -7,9 +7,9 @@ from django.core.files.base import ContentFile
 from .ml import detect_disease
 from .imagekit_upload import upload_to_imagekit
 
-from .serializers import UploadsSerializer, DiseasesSerializer, DetectionHistorySerializer
+from .serializers import UploadsSerializer, DiseasesSerializer, DetectionHistorySerializer, DetailsFromDiseaseIdSerializer
 
-from .models import Diseases
+from .models import Diseases, DetectionHistory
 
 
 class DiseaseDetectionView(APIView):
@@ -40,11 +40,35 @@ class DiseaseDetectionView(APIView):
 class DiseaseImageUploadToImagekitView(APIView):
     def post(self, request):
         user_id = request.data['userId']
-        disease_data = Diseases.objects.get(ml_id=request.data['mlId'])
         url = upload_to_imagekit(request.data['base64'])
-        detection_history_data = {"leaf_url": url, "disease": disease_data.id, 'user': user_id}
+        print(url)
+        detection_history_data= {}
+
+        # for healthy detection, we store disease_id as null value in detection History table
+        healthy = request.data['healthy']
+        print(healthy)
+        if healthy == 'true':
+            detection_history_data.update({"leaf_url": url, 'user': user_id, 'detected': False})
+        if healthy == 'false':
+            # for detected disease, mlId will be send by client
+            disease_data = Diseases.objects.get(ml_id=request.data['mlId'])
+            detection_history_data.update({"leaf_url": url, "disease": disease_data.id, 'user': user_id})
         detection_history_serializer = DetectionHistorySerializer(data=detection_history_data)
         if detection_history_serializer.is_valid():
             detection_history_serializer.save()
             return Response(detection_history_serializer.data, status=status.HTTP_201_CREATED)
         return Response(detection_history_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserHistory(APIView):
+    def post(self, request):
+        queryset = DetectionHistory.objects.filter(user=request.data['id']).filter(detected=True)
+        serializer = DetectionHistorySerializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+class DetailsFromDiseaseId(APIView):
+    def post(self, request):
+        queryset = Diseases.objects.get(pk=request.data['disease_id'])
+        sserializer = DetailsFromDiseaseIdSerializer(queryset)
+        return Response(sserializer.data)

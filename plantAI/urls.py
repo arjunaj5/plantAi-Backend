@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from main.views import CustomObtainAuthToken
 from main.views import UserCreate, PlantsView
-from diseases.views import DiseaseDetectionView, DiseaseImageUploadToImagekitView
+from diseases.views import DiseaseDetectionView, DiseaseImageUploadToImagekitView, UserHistory, DetailsFromDiseaseId
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +25,7 @@ urlpatterns = [
     path('create-user/', UserCreate.as_view(), name='account-create'),
     path('plants-view/', PlantsView.as_view(), name='plants-view'),
     path('detect-disease/', DiseaseDetectionView.as_view(), name='detect-disease'),
-    path('upload-imagekit/', DiseaseImageUploadToImagekitView.as_view(), name='upload-imagekit')
+    path('upload-imagekit/', DiseaseImageUploadToImagekitView.as_view(), name='upload-imagekit'),
+    path('user-history/', UserHistory.as_view(), name='user-history'),
+    path('detection-details-by-disease-id/', DetailsFromDiseaseId.as_view(), name='details-from-disease-id')
 ]
