@@ -40,4 +40,4 @@ class DetectionHistory(models.Model):
     leaf_url = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.disease.name
+        return self.user.username
