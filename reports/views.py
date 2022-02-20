@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from .serializers import ReportsSerializer
+from .serializers import ReportsSerializer, AdminReportsSerializer
 from .models import Reports
 from diseases.models import DetectionHistory
 
@@ -25,4 +25,11 @@ class ReportsRetrievalView(APIView):
     def post(self, request):
         queryset = Reports.objects.filter(history__user=request.data['user_id'])
         serializer = ReportsSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+class AllReportsRetrievalView(APIView):
+    def get(self, request):
+        queryset = Reports.objects.all()
+        serializer = AdminReportsSerializer(queryset, many=True)
         return Response(serializer.data)
