@@ -37,6 +37,7 @@ class DetectionHistory(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     disease = models.ForeignKey(Diseases, default=None, blank=True, null=True, on_delete=models.CASCADE)
     detected = models.BooleanField(default=True)
+    reported = models.BooleanField(default=False)
     leaf_url = models.CharField(max_length=255)
 
     def __str__(self):

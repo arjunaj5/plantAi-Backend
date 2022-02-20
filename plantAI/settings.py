@@ -41,7 +41,8 @@ INSTALLED_APPS = [
 
     # Apps
     'main',
-    'diseases'
+    'diseases',
+    'reports'
 ]
 
 MIDDLEWARE = [

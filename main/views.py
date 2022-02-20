@@ -44,7 +44,6 @@ class PlantsView(APIView):
     def post(self, request, format='json'):
 
         # Get a list of plants based on search query
-        print(request.data)
         if request.data['searchQuery']:
             queryset = Plants.objects.filter(name__icontains=request.data['searchQuery'])
             serializer = PlantsSerializer(queryset, many=True)

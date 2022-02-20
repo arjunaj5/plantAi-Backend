@@ -33,6 +33,7 @@ class DiseaseDetectionView(APIView):
                 return Response({"healthy": True})
             disease_data = Diseases.objects.get(ml_id=ml_id)
             serializer = DiseasesSerializer(disease_data)
+            print(serializer.data)
             return Response(serializer.data)
         return Response({"result": "image not valid"})
 
@@ -42,7 +43,7 @@ class DiseaseImageUploadToImagekitView(APIView):
         user_id = request.data['userId']
         url = upload_to_imagekit(request.data['base64'])
         print(url)
-        detection_history_data= {}
+        detection_history_data = {}
 
         # for healthy detection, we store disease_id as null value in detection History table
         healthy = request.data['healthy']
@@ -70,5 +71,5 @@ class UserHistory(APIView):
 class DetailsFromDiseaseId(APIView):
     def post(self, request):
         queryset = Diseases.objects.get(pk=request.data['disease_id'])
-        sserializer = DetailsFromDiseaseIdSerializer(queryset)
-        return Response(sserializer.data)
+        serializer = DetailsFromDiseaseIdSerializer(queryset)
+        return Response(serializer.data)

@@ -1,0 +1,28 @@
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
+
+from .serializers import ReportsSerializer
+from .models import Reports
+from diseases.models import DetectionHistory
+
+
+class ReportsCreationView(APIView):
+
+    def post(self, request):
+
+        serializer = ReportsSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            history = DetectionHistory.objects.get(pk=request.data['history'])
+            history.reported = True
+            history.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class ReportsRetrievalView(APIView):
+    def post(self, request):
+        queryset = Reports.objects.filter(history__user=request.data['user_id'])
+        serializer = ReportsSerializer(queryset, many=True)
+        return Response(serializer.data)
