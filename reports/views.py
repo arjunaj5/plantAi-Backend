@@ -23,14 +23,14 @@ class ReportsCreationView(APIView):
 
 class ReportsRetrievalView(APIView):
     def post(self, request):
-        queryset = Reports.objects.filter(history__user=request.data['user_id'])
+        queryset = Reports.objects.filter(history__user=request.data['user_id']).order_by('-id')
         serializer = ReportsSerializer(queryset, many=True)
         return Response(serializer.data)
 
 
 class AllReportsRetrievalView(APIView):
     def get(self, request):
-        queryset = Reports.objects.all()
+        queryset = Reports.objects.all().order_by('-id')
         serializer = AdminReportsSerializer(queryset, many=True)
         return Response(serializer.data)
 

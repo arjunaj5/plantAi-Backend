@@ -63,7 +63,7 @@ class DiseaseImageUploadToImagekitView(APIView):
 
 class UserHistory(APIView):
     def post(self, request):
-        queryset = DetectionHistory.objects.filter(user=request.data['id']).filter(detected=True)
+        queryset = DetectionHistory.objects.filter(user=request.data['id']).filter(detected=True).order_by('-id')
         serializer = DetectionHistorySerializer(queryset, many=True)
         return Response(serializer.data)
 
