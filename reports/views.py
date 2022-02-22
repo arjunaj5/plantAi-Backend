@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from .serializers import ReportsSerializer, AdminReportsSerializer
+from .serializers import ReportsSerializer, AdminReportsSerializer, NewDiseaseSerializer, NewCureSerializer
 from .models import Reports
 from diseases.models import DetectionHistory
 
@@ -33,3 +33,29 @@ class AllReportsRetrievalView(APIView):
         queryset = Reports.objects.all()
         serializer = AdminReportsSerializer(queryset, many=True)
         return Response(serializer.data)
+
+
+class NewDiseaseView(APIView):
+
+    def post(self, request):
+        serializer = NewDiseaseSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            report = Reports.objects.get(pk=request.data['report'])
+            report.status = 'replied'
+            report.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class NewCureView(APIView):
+
+    def post(self, request):
+        serializer = NewCureSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            report = Reports.objects.get(pk=request.data['report'])
+            report.status = 'replied'
+            report.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)

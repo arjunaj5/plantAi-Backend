@@ -5,6 +5,7 @@ from .models import Plants
 
 
 class UserSerializer(serializers.ModelSerializer):
+    groups = serializers.SlugRelatedField(many=True, read_only=True, slug_field="name")
     email = serializers.EmailField(
             required=True,
             validators=[UniqueValidator(
@@ -32,7 +33,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'id')
+        fields = ('username', 'email', 'password', 'id', 'groups')
 
 
 class PlantsSerializer(serializers.ModelSerializer):

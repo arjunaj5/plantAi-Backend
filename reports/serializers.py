@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Reports
+from .models import Reports, NewDisease, NewCure
 
 
 class ReportsSerializer(serializers.ModelSerializer):
@@ -19,4 +19,16 @@ class AdminReportsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Reports
+        fields = '__all__'
+
+
+class NewDiseaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NewDisease
+        fields = '__all__'
+
+
+class NewCureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NewCure
         fields = '__all__'
