@@ -5,6 +5,5 @@ from diseases.models import Diseases, Uploads, Cure, DetectionHistory
 
 admin.site.register(Plants)
 admin.site.register(Diseases)
-admin.site.register(Uploads)
 admin.site.register(Cure)
 admin.site.register(DetectionHistory)

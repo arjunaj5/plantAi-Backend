@@ -18,7 +18,8 @@ from django.urls import path, include
 from main.views import CustomObtainAuthToken
 from main.views import UserCreate, PlantsView
 from diseases.views import DiseaseDetectionView, DiseaseImageUploadToImagekitView, UserHistory, DetailsFromDiseaseId
-from reports.views import ReportsCreationView, ReportsRetrievalView, AllReportsRetrievalView, NewDiseaseView, NewCureView
+from reports.views import ReportsCreationView, ReportsRetrievalView, AllReportsRetrievalView, NewDiseaseView,\
+    NewCureView, RepliedReportsView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,5 +35,6 @@ urlpatterns = [
     path('all-reports-retrieval-view/', AllReportsRetrievalView.as_view(), name='all-reports-retrieval-view'),
 
     path('new-disease-health-dept/', NewDiseaseView.as_view(), name='new-disease-health-dept'),
-    path('new-cure-health-dept/', NewCureView.as_view(), name='new-cure-health-dept')
+    path('new-cure-health-dept/', NewCureView.as_view(), name='new-cure-health-dept'),
+    path('replied-report-data/', RepliedReportsView.as_view(), name='replied-report-view')
 ]
