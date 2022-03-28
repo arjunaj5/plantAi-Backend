@@ -28,13 +28,15 @@ class DiseaseDetectionView(APIView):
             disease_image = serializer.save()
             path = "media/" + str(disease_image.photo)
             print(path)
-            ml_id = detect_disease(path)
+            ml_result = detect_disease(path)
+            ml_id = ml_result["id"]
+            probability = ml_result["probability"]
             if ml_id in [3, 4, 6, 10, 14, 17, 19, 22, 23, 24, 27, 37]:
-                return Response({"healthy": True})
+                return Response({"healthy": True, "probability": probability})
             disease_data = Diseases.objects.get(ml_id=ml_id)
             serializer = DiseasesSerializer(disease_data)
             print(serializer.data)
-            return Response(serializer.data)
+            return Response(serializer.data.update({"probability": probability}))
         return Response({"result": "image not valid"})
 
 

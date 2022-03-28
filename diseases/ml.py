@@ -49,5 +49,9 @@ def detect_disease(path):
     test_img = np.expand_dims(test_img, axis=0)
     result = Detection.predict(test_img)
     a = result.argmax()
-    output = a
-    return output
+    confidence = 100 * (np.max(result[0]))
+    ml_result = {
+        "id": a,
+        "probability": confidence
+    }
+    return ml_result
