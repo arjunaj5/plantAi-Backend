@@ -39,6 +39,7 @@ class DetectionHistory(models.Model):
     detected = models.BooleanField(default=True)
     reported = models.BooleanField(default=False)
     leaf_url = models.CharField(max_length=255)
+    probability = models.FloatField()
 
     def __str__(self):
         return self.user.username

@@ -36,9 +36,7 @@ class DiseaseDetectionView(APIView):
             disease_data = Diseases.objects.get(ml_id=ml_id)
             serializer = DiseasesSerializer(disease_data)
             serializer_data = serializer.data
-            print(type(serializer.data))
             serializer_data.update({"probability": probability})
-            print(serializer_data)
             return Response(serializer_data)
         return Response({"result": "image not valid"})
 
@@ -47,12 +45,11 @@ class DiseaseImageUploadToImagekitView(APIView):
     def post(self, request):
         user_id = request.data['userId']
         url = upload_to_imagekit(request.data['base64'])
-        print(url)
-        detection_history_data = {}
+        probability = request.data['probability']
+        detection_history_data = {'probability': probability}
 
         # for healthy detection, we store disease_id as null value in detection History table
         healthy = request.data['healthy']
-        print(healthy)
         if healthy == 'true':
             detection_history_data.update({"leaf_url": url, 'user': user_id, 'detected': False})
         if healthy == 'false':

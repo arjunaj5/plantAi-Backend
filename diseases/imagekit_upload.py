@@ -15,5 +15,4 @@ def upload_to_imagekit(base64):
             "folder": "/detections"
         },
     )
-    print(upload)
     return upload['response']['url']
