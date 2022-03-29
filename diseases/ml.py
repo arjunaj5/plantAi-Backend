@@ -43,8 +43,7 @@ def detect_disease(path):
                  'Tomato__Tomato_YellowLeaf__Curl_Virus': 35,
                  'Tomato__Tomato_mosaic_virus': 36,
                  'Tomato_healthy': 37}
-    test_img = image.load_img(path,
-                              target_size=(128, 128))
+    test_img = image.load_img(path)
     test_img = image.img_to_array(test_img)
     test_img = np.expand_dims(test_img, axis=0)
     result = Detection.predict(test_img)

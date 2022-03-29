@@ -35,8 +35,11 @@ class DiseaseDetectionView(APIView):
                 return Response({"healthy": True, "probability": probability})
             disease_data = Diseases.objects.get(ml_id=ml_id)
             serializer = DiseasesSerializer(disease_data)
-            print(serializer.data)
-            return Response(serializer.data.update({"probability": probability}))
+            serializer_data = serializer.data
+            print(type(serializer.data))
+            serializer_data.update({"probability": probability})
+            print(serializer_data)
+            return Response(serializer_data)
         return Response({"result": "image not valid"})
 
 
