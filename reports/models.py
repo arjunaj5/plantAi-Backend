@@ -7,6 +7,8 @@ class Reports(models.Model):
     history = models.ForeignKey(DetectionHistory, on_delete=models.CASCADE)
     comments = models.CharField(max_length=255, blank=True)
     status = models.CharField(max_length=20)
+    created_at = models.DateField(auto_now_add=True)
+    modified_at = models.DateField(auto_now=True)
 
     def __str__(self):
         return self.status
